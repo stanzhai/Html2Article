@@ -9,6 +9,7 @@
 - **将实例项目中的Html2Article.cs复制到你的项目中。**
 - **引入命名空间Html2Article。**
 - **添加如下代码：**
+
 ```C#
 // html为你要提取的html文本
 string html = "<html>....</html>";
@@ -19,7 +20,7 @@ Article article = Html2Article.GetArticle(html);
 ## Html2Article类
 
 - **Html2Article类是提取正文的核心类**
-- **Html2Article配置说明**
+- **Html2Article配置说明**  
   AppendMode：是否使用正文追加模式，默认为false，设置为true会将更多符合条件的文本添加到正文。  
   Depth：分析的深度，默认为5，对于行空隙较大的页面可增加此值。  
   LimitCount：字符限定数，当分析的文本数量达到限定数则认为进入正文内容，默认为180个字符。  
