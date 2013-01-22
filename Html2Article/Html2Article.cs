@@ -30,11 +30,8 @@ namespace Html2Article
                 new string[] { @"(?is)<script.*?>.*?</script>", "" },
                 new string[] { @"(?is)<style.*?>.*?</style>", "" },
                 new string[] { @"&.{2,8};|&#.{2,8};", "" },
-                // 这个玩意用来处理回车符，在最终的处理结果中统一替换成换行符
-                new string[] { @"(?is)</p>|<br.*?/>", "[CRLF]"},        
                 // 针对链接密集型的网站的处理，主要是门户类的网站，降低链接干扰
-                new string[] { @"(?is)</a>", "</a>\n"},                 
-                new string[] { @"(?is)<.*?>", "" }
+                new string[] { @"(?is)</a>", "</a>\n"}                 
             };
 
         private static bool _appendMode = false;
@@ -69,6 +66,11 @@ namespace Html2Article
             set { _limitCount = value; }
         }
 
+        /// <summary>
+        /// 是否保留原始正文标签
+        /// </summary>
+        public static bool ReserveTags { get; set; }
+
         #endregion
 
         /// <summary>
@@ -98,6 +100,14 @@ namespace Html2Article
             {
                 body = Regex.Replace(body, filter[0], filter[1]);
             }
+            // 标签规整化处理，将标签属性格式化处理到同一行
+            // 处理形如以下的标签：
+            //  <a 
+            //   href='http://www.baidu.com'
+            //   class='test'
+            // 处理后为
+            //  <a href='http://www.baidu.com' class='test'>
+            body = Regex.Replace(body, @"(<[^<>]+)\s*\n\s*", FormatTag);
 
             return new Article
                        {
@@ -105,6 +115,25 @@ namespace Html2Article
                            PublishDate = GetPublishDate(html),
                            Content = GetContent(body)
                        };
+        }
+
+        /// <summary>
+        /// 格式化标签，剔除匹配标签中的回车符
+        /// </summary>
+        /// <param name="match"></param>
+        /// <returns></returns>
+        private static string FormatTag(Match match)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var ch in match.Value)
+            {
+                if (ch == '\r' || ch == '\n')
+                {
+                    continue;
+                }
+                sb.Append(ch);
+            }
+            return sb.ToString();
         }
 
         /// <summary>
@@ -199,15 +228,36 @@ namespace Html2Article
         /// <summary>
         /// 从body标签文本中分析正文内容
         /// </summary>
-        /// <param name="bodyText">过滤标签的body文本内容</param>
+        /// <param name="bodyText">只过滤了script和style标签的body文本内容</param>
         /// <returns></returns>
         private static string GetContent(string bodyText)
         {
-            string[] lines = bodyText.Split('\n');
-            // 去除每行的空白字符
-            for (int i = 0; i < lines.Length; i++)
+            string[] orgLines = null;   // 保存原始内容，按行存储
+            string[] lines = null;      // 保存干净的文本内容，不包含标签
+
+            if (ReserveTags)
             {
-                lines[i] = lines[i].Trim();
+                orgLines = bodyText.Split('\n');
+                lines = new string[orgLines.Length];                
+                // 去除每行的空白字符,剔除标签
+                for (int i = 0; i < orgLines.Length; i++)
+                {
+                    string lineInfo = orgLines[i];
+                    lines[i] = Regex.Replace(lineInfo, "(?is)<.*?>", "").Trim();
+                }
+            }
+            else
+            {
+                // 处理回车，使用[crlf]做为回车标记符，最后统一处理
+                bodyText = Regex.Replace(bodyText, "(?is)</p>|<br.*?/>", "[crlf]");
+                // 剔除所有标签
+                lines = Regex.Replace(bodyText, "(?is)<.*?>", "").Split('\n');
+
+                // 去除每行的空白字符
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    lines[i] = lines[i].Trim();
+                }
             }
 
             StringBuilder sb = new StringBuilder();
@@ -226,7 +276,7 @@ namespace Html2Article
                     if (preTextLen > _limitCount && len > 0)    // 如果上次查找的文本数量超过了限定字数，且当前行数字符数不为0，则认为是开始位置
                     {
                         startPos = i - 1;
-                        sb.Append(lines[startPos]);
+                        sb.Append(ReserveTags ? orgLines[startPos] : lines[startPos]);
                     }
                 }
                 else
@@ -239,14 +289,17 @@ namespace Html2Article
                         }
                         startPos = -1;
                     }
-                    sb.Append(lines[i]);
+                    sb.Append(ReserveTags ? orgLines[i] : lines[i]);
                 }
                 preTextLen = len;
             }
 
             string result = sb.ToString();
             // 处理回车符，更好的将文本格式化输出
-            result = result.Replace("[CRLF]", Environment.NewLine);
+            if (!ReserveTags)
+            {
+                result = result.Replace("[crlf]", Environment.NewLine);
+            }
             return result;
         }
     }

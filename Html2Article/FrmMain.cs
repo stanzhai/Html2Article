@@ -44,9 +44,11 @@ namespace Html2Article
             StreamReader sr = new StreamReader(this.webBrowser.DocumentStream, Encoding.GetEncoding(encode));
             string html = sr.ReadToEnd();
 
-
+            //Html2Article.LimitCount = 100;
+            //Html2Article.Depth = 8;
             // 设置是否使用正文追加模式
             Html2Article.AppendMode = this.appendCheckBox.CheckState == CheckState.Checked;
+            Html2Article.ReserveTags = this.reserveTagCheckBox.CheckState == CheckState.Checked;
 
             Stopwatch sw = new Stopwatch();
             sw.Start();

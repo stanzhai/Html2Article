@@ -36,13 +36,14 @@
             this.contentTextBox = new System.Windows.Forms.TextBox();
             this.titleTextBox = new System.Windows.Forms.TextBox();
             this.publishDateTextBox = new System.Windows.Forms.TextBox();
-            this.urlTextBox = new System.Windows.Forms.TextBox();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.appendCheckBox = new System.Windows.Forms.CheckBox();
             this.msgLabel = new System.Windows.Forms.Label();
+            this.reserveTagCheckBox = new System.Windows.Forms.CheckBox();
+            this.appendCheckBox = new System.Windows.Forms.CheckBox();
+            this.urlTextBox = new System.Windows.Forms.TextBox();
             contentLabel = new System.Windows.Forms.Label();
             publishDateLabel = new System.Windows.Forms.Label();
             titleLabel = new System.Windows.Forms.Label();
@@ -128,15 +129,6 @@
             this.publishDateTextBox.Size = new System.Drawing.Size(565, 21);
             this.publishDateTextBox.TabIndex = 11;
             // 
-            // urlTextBox
-            // 
-            this.urlTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Html2Article.Properties.Settings.Default, "url", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.urlTextBox.Location = new System.Drawing.Point(101, 25);
-            this.urlTextBox.Name = "urlTextBox";
-            this.urlTextBox.Size = new System.Drawing.Size(565, 21);
-            this.urlTextBox.TabIndex = 0;
-            this.urlTextBox.Text = global::Html2Article.Properties.Settings.Default.url;
-            // 
             // webBrowser
             // 
             this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -180,6 +172,26 @@
             this.tabPage2.Text = "原始网页";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // msgLabel
+            // 
+            this.msgLabel.AutoSize = true;
+            this.msgLabel.Location = new System.Drawing.Point(12, 478);
+            this.msgLabel.Name = "msgLabel";
+            this.msgLabel.Size = new System.Drawing.Size(0, 12);
+            this.msgLabel.TabIndex = 15;
+            // 
+            // reserveTagCheckBox
+            // 
+            this.reserveTagCheckBox.AutoSize = true;
+            this.reserveTagCheckBox.Checked = global::Html2Article.Properties.Settings.Default.reserveTag;
+            this.reserveTagCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Html2Article.Properties.Settings.Default, "reserveTag", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.reserveTagCheckBox.Location = new System.Drawing.Point(675, 85);
+            this.reserveTagCheckBox.Name = "reserveTagCheckBox";
+            this.reserveTagCheckBox.Size = new System.Drawing.Size(72, 16);
+            this.reserveTagCheckBox.TabIndex = 14;
+            this.reserveTagCheckBox.Text = "保留标签";
+            this.reserveTagCheckBox.UseVisualStyleBackColor = true;
+            // 
             // appendCheckBox
             // 
             this.appendCheckBox.AutoSize = true;
@@ -192,13 +204,14 @@
             this.appendCheckBox.Text = "追加模式";
             this.appendCheckBox.UseVisualStyleBackColor = true;
             // 
-            // msgLabel
+            // urlTextBox
             // 
-            this.msgLabel.AutoSize = true;
-            this.msgLabel.Location = new System.Drawing.Point(12, 478);
-            this.msgLabel.Name = "msgLabel";
-            this.msgLabel.Size = new System.Drawing.Size(0, 12);
-            this.msgLabel.TabIndex = 15;
+            this.urlTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Html2Article.Properties.Settings.Default, "url", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.urlTextBox.Location = new System.Drawing.Point(101, 25);
+            this.urlTextBox.Name = "urlTextBox";
+            this.urlTextBox.Size = new System.Drawing.Size(565, 21);
+            this.urlTextBox.TabIndex = 0;
+            this.urlTextBox.Text = global::Html2Article.Properties.Settings.Default.url;
             // 
             // FrmMain
             // 
@@ -207,6 +220,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(763, 520);
             this.Controls.Add(this.msgLabel);
+            this.Controls.Add(this.reserveTagCheckBox);
             this.Controls.Add(this.appendCheckBox);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(contentLabel);
@@ -243,6 +257,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.CheckBox appendCheckBox;
         private System.Windows.Forms.Label msgLabel;
+        private System.Windows.Forms.CheckBox reserveTagCheckBox;
     }
 }
 
