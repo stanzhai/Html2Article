@@ -48,7 +48,6 @@ namespace Html2Article
             //Html2Article.Depth = 8;
             // 设置是否使用正文追加模式
             Html2Article.AppendMode = this.appendCheckBox.CheckState == CheckState.Checked;
-            Html2Article.ReserveTags = this.reserveTagCheckBox.CheckState == CheckState.Checked;
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -60,6 +59,7 @@ namespace Html2Article
             this.publishDateTextBox.Text = article.PublishDate.ToString();
             this.titleTextBox.Text = article.Title;
             this.contentTextBox.Text = article.Content;
+            this.contentWebBrowser.DocumentText = article.ContentWithTags; 
 
             ResetState();
         }

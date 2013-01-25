@@ -41,9 +41,10 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.msgLabel = new System.Windows.Forms.Label();
-            this.reserveTagCheckBox = new System.Windows.Forms.CheckBox();
             this.appendCheckBox = new System.Windows.Forms.CheckBox();
             this.urlTextBox = new System.Windows.Forms.TextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.contentWebBrowser = new System.Windows.Forms.WebBrowser();
             contentLabel = new System.Windows.Forms.Label();
             publishDateLabel = new System.Windows.Forms.Label();
             titleLabel = new System.Windows.Forms.Label();
@@ -51,6 +52,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // contentLabel
@@ -143,6 +145,7 @@
             // 
             this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Bottom;
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(101, 110);
             this.tabControl1.Name = "tabControl1";
@@ -158,7 +161,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(638, 372);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "文章正文";
+            this.tabPage1.Text = "正文文本";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
@@ -179,18 +182,6 @@
             this.msgLabel.Name = "msgLabel";
             this.msgLabel.Size = new System.Drawing.Size(0, 12);
             this.msgLabel.TabIndex = 15;
-            // 
-            // reserveTagCheckBox
-            // 
-            this.reserveTagCheckBox.AutoSize = true;
-            this.reserveTagCheckBox.Checked = global::Html2Article.Properties.Settings.Default.reserveTag;
-            this.reserveTagCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Html2Article.Properties.Settings.Default, "reserveTag", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.reserveTagCheckBox.Location = new System.Drawing.Point(675, 85);
-            this.reserveTagCheckBox.Name = "reserveTagCheckBox";
-            this.reserveTagCheckBox.Size = new System.Drawing.Size(72, 16);
-            this.reserveTagCheckBox.TabIndex = 14;
-            this.reserveTagCheckBox.Text = "保留标签";
-            this.reserveTagCheckBox.UseVisualStyleBackColor = true;
             // 
             // appendCheckBox
             // 
@@ -213,6 +204,26 @@
             this.urlTextBox.TabIndex = 0;
             this.urlTextBox.Text = global::Html2Article.Properties.Settings.Default.url;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.contentWebBrowser);
+            this.tabPage3.Location = new System.Drawing.Point(4, 4);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(638, 372);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "带标签正文";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // contentWebBrowser
+            // 
+            this.contentWebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contentWebBrowser.Location = new System.Drawing.Point(3, 3);
+            this.contentWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.contentWebBrowser.Name = "contentWebBrowser";
+            this.contentWebBrowser.Size = new System.Drawing.Size(632, 366);
+            this.contentWebBrowser.TabIndex = 0;
+            // 
             // FrmMain
             // 
             this.AcceptButton = this.btnOk;
@@ -220,7 +231,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(763, 520);
             this.Controls.Add(this.msgLabel);
-            this.Controls.Add(this.reserveTagCheckBox);
             this.Controls.Add(this.appendCheckBox);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(contentLabel);
@@ -239,6 +249,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,7 +268,8 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.CheckBox appendCheckBox;
         private System.Windows.Forms.Label msgLabel;
-        private System.Windows.Forms.CheckBox reserveTagCheckBox;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.WebBrowser contentWebBrowser;
     }
 }
 

@@ -46,17 +46,5 @@ namespace Html2Article.Properties {
                 this["appendMode"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool reserveTag {
-            get {
-                return ((bool)(this["reserveTag"]));
-            }
-            set {
-                this["reserveTag"] = value;
-            }
-        }
     }
 }
