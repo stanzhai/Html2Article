@@ -5,6 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Html2Article", "Html2Articl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2C4D51DA-94A5-4035-BB74-350CE83CD2DF}"
 	ProjectSection(SolutionItems) = preProject
+		License.md = License.md
 		README.md = README.md
 	EndProjectSection
 EndProject
