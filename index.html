@@ -31,9 +31,16 @@
           <h1>Html2Article</h1>
 
 <p>.NET平台下，一个高效的从Html中提取正文的工具。<br>
-正文提取采用了基于文本密度的提取算法，支持从压缩的Html文档中提取正文，每个页面平均提取时间为10ms，正确率到95%以上。<br><img src="http://blog.stanzhai.com/images/project/Html2Article.png" alt="Html2Article"></p>
+正文提取采用了基于文本密度的提取算法，支持从压缩的Html文档中提取正文，每个页面平均提取时间为15ms，正确率到95%以上。<br><img src="http://blog.stanzhai.com/images/project/Html2Article.png" alt="Html2Article"></p>
 
-<h2>让你的项目支持Html正文提取</h2>
+<h1>Html2Article特色</h1>
+
+<ul>
+<li>标签无关，提取正文不依赖标签；</li>
+<li>支持从压缩的html文档中提取正文内容；</li>
+<li>支持带标签输出原始正文；</li>
+<li>核心算法简洁高效，平均提取时间在15ms左右。</li>
+</ul><h2>让你的项目支持Html正文提取</h2>
 
 <ul>
 <li><strong>将实例项目中的Html2Article.cs复制到你的项目中。</strong></li>
@@ -41,7 +48,7 @@
 <li><strong>添加如下代码：</strong></li>
 </ul><div class="highlight"><pre><span class="c1">// html为你要提取的html文本</span>
 <span class="kt">string</span> <span class="n">html</span> <span class="p">=</span> <span class="s">"&lt;html&gt;....&lt;/html&gt;"</span><span class="p">;</span>
-<span class="c1">// article对象包含Title(标题)，PublishDate(发布日期)，和Content(正文)三个属性</span>
+<span class="c1">// article对象包含Title(标题)，PublishDate(发布日期)，Content(正文)和ContentWithTags(带标签正文)四个属性</span>
 <span class="n">Article</span> <span class="n">article</span> <span class="p">=</span> <span class="n">Html2Article</span><span class="p">.</span><span class="n">GetArticle</span><span class="p">(</span><span class="n">html</span><span class="p">);</span>
 </pre></div>
 
@@ -50,11 +57,15 @@
 <ul>
 <li><strong>Html2Article类是提取正文的核心类</strong></li>
 <li>
-<strong>Html2Article配置说明</strong><br>
-AppendMode：是否使用正文追加模式，默认为false，设置为true会将更多符合条件的文本添加到正文。<br>
-Depth：分析的深度，默认为5，对于行空隙较大的页面可增加此值。<br>
-LimitCount：字符限定数，当分析的文本数量达到限定数则认为进入正文内容，默认为180个字符。<br>
-GetArticle(string html)：从Html文本中获取Article。</li>
+<strong>Html2Article配置说明</strong><br><ul>
+<li>AppendMode：是否使用正文追加模式，默认为false，设置为true会将更多符合条件的文本添加到正文。</li>
+<li>Depth：分析的深度，默认为5，对于行空隙较大的页面可增加此值。<br>
+</li>
+<li>LimitCount：字符限定数，当分析的文本数量达到限定数则认为进入正文内容，默认为180个字符。<br>
+</li>
+<li>GetArticle(string html)：从Html文本中获取Article。</li>
+</ul>
+</li>
 </ul><h2>License</h2>
 
 <p><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a></p>
