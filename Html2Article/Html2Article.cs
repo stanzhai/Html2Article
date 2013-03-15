@@ -183,8 +183,9 @@ namespace Html2Article
         /// <returns></returns>
         private static DateTime GetPublishDate(string html)
         {
+            string text = Regex.Replace(html, "(?is)<.*?>", "");
             Match match = Regex.Match(
-                html,
+                text,
                 @"((\d{4}|\d{2})(\-|\/)\d{1,2}\3\d{1,2})(\s?\d{2}:\d{2})?|(\d{4}年\d{1,2}月\d{1,2}日)(\s?\d{2}:\d{2})?", 
                 RegexOptions.IgnoreCase);
 
