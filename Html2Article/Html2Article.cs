@@ -32,7 +32,8 @@ namespace Html2Article
     {
         #region 参数设置
 
-        // 正则表达式过滤：正则表达式，要替换成的文本（注意替换顺序，最后一个会剔除所有标签）
+        // 正则表达式过滤：正则表达式，要替换成的文本
+        // 首先剔除script和style无用标签，暂时保留其他标签是为了保存带标签的正文；分析过程中还是会剔除所有标签的
         private static readonly string[][] _filters = new string[][]{
                 new string[] { @"(?is)<script.*?>.*?</script>", "" },
                 new string[] { @"(?is)<style.*?>.*?</style>", "" },
