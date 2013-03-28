@@ -2,7 +2,7 @@
 
 .NET平台下，一个高效的从Html中提取正文的工具。  
 正文提取采用了基于文本密度的提取算法，支持从压缩的Html文档中提取正文，每个页面平均提取时间为30ms，正确率在95%以上。  
-![Html2Article](http://blog.stanzhai.com/images/project/Html2Article.png)
+![Html2Article](http://blog.zhaishidan.cn/images/project/Html2Article.png)
 
 ## Html2Article特色
 
