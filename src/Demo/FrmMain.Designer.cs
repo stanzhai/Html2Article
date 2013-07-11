@@ -1,4 +1,4 @@
-﻿namespace Html2Article
+﻿namespace Demo
 {
     partial class FrmMain
     {
@@ -39,20 +39,20 @@
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.contentWebBrowser = new System.Windows.Forms.WebBrowser();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.msgLabel = new System.Windows.Forms.Label();
             this.appendCheckBox = new System.Windows.Forms.CheckBox();
             this.urlTextBox = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.contentWebBrowser = new System.Windows.Forms.WebBrowser();
             contentLabel = new System.Windows.Forms.Label();
             publishDateLabel = new System.Windows.Forms.Label();
             titleLabel = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // contentLabel
@@ -164,6 +164,26 @@
             this.tabPage1.Text = "正文文本";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.contentWebBrowser);
+            this.tabPage3.Location = new System.Drawing.Point(4, 4);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(638, 372);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "带标签正文";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // contentWebBrowser
+            // 
+            this.contentWebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contentWebBrowser.Location = new System.Drawing.Point(3, 3);
+            this.contentWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.contentWebBrowser.Name = "contentWebBrowser";
+            this.contentWebBrowser.Size = new System.Drawing.Size(632, 366);
+            this.contentWebBrowser.TabIndex = 0;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.webBrowser);
@@ -186,8 +206,8 @@
             // appendCheckBox
             // 
             this.appendCheckBox.AutoSize = true;
-            this.appendCheckBox.Checked = global::Html2Article.Properties.Settings.Default.appendMode;
-            this.appendCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Html2Article.Properties.Settings.Default, "appendMode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.appendCheckBox.Checked = global::Demo.Properties.Settings.Default.appendMode;
+            this.appendCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Demo.Properties.Settings.Default, "appendMode", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.appendCheckBox.Location = new System.Drawing.Point(675, 57);
             this.appendCheckBox.Name = "appendCheckBox";
             this.appendCheckBox.Size = new System.Drawing.Size(72, 16);
@@ -197,32 +217,12 @@
             // 
             // urlTextBox
             // 
-            this.urlTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Html2Article.Properties.Settings.Default, "url", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.urlTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Demo.Properties.Settings.Default, "url", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.urlTextBox.Location = new System.Drawing.Point(101, 25);
             this.urlTextBox.Name = "urlTextBox";
             this.urlTextBox.Size = new System.Drawing.Size(565, 21);
             this.urlTextBox.TabIndex = 0;
-            this.urlTextBox.Text = global::Html2Article.Properties.Settings.Default.url;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.contentWebBrowser);
-            this.tabPage3.Location = new System.Drawing.Point(4, 4);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(638, 372);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "带标签正文";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // contentWebBrowser
-            // 
-            this.contentWebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.contentWebBrowser.Location = new System.Drawing.Point(3, 3);
-            this.contentWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.contentWebBrowser.Name = "contentWebBrowser";
-            this.contentWebBrowser.Size = new System.Drawing.Size(632, 366);
-            this.contentWebBrowser.TabIndex = 0;
+            this.urlTextBox.Text = global::Demo.Properties.Settings.Default.url;
             // 
             // FrmMain
             // 
@@ -248,8 +248,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

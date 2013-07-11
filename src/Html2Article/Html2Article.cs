@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Html2Article
+namespace StanSoft
 {
     /// <summary>
     /// 文章正文数据模型
@@ -27,17 +27,18 @@ namespace Html2Article
     /// <summary>
     /// 解析Html页面的文章正文内容,基于文本密度的HTML正文提取类
     /// Date:   2012/12/30
+    /// Update: 
+    ///     2013/7/10   优化文章头部分析算法，优化
+    ///         
     /// </summary>
     public class Html2Article
     {
         #region 参数设置
 
         // 正则表达式过滤：正则表达式，要替换成的文本
-        // 首先剔除script和style无用标签，暂时保留其他标签是为了保存带标签的正文；分析过程中还是会剔除所有标签的
         private static readonly string[][] _filters = new string[][]{
                 new string[] { @"(?is)<script.*?>.*?</script>", "" },
                 new string[] { @"(?is)<style.*?>.*?</style>", "" },
-                new string[] { @"&.{2,8};|&#.{2,8};", "" },
                 // 针对链接密集型的网站的处理，主要是门户类的网站，降低链接干扰
                 new string[] { @"(?is)</a>", "</a>\n"}                 
             };
@@ -53,9 +54,9 @@ namespace Html2Article
             set { _appendMode = value; }
         }
 
-        private static int _depth = 5;
+        private static int _depth = 6;
         /// <summary>
-        /// 按行分析的深度，默认为5
+        /// 按行分析的深度，默认为6
         /// </summary>
         public static int Depth
         {
@@ -73,6 +74,11 @@ namespace Html2Article
             get { return _limitCount; }
             set { _limitCount = value; }
         }
+
+        // 确定文章正文头部时，向上查找，连续的空行到达_headEmptyLines，则停止查找
+        private static int _headEmptyLines = 2;
+        // 用于确定文章结束的字符数
+        private static int _endLimitCharCount = 20;
 
         #endregion
 
@@ -184,10 +190,11 @@ namespace Html2Article
         /// <returns></returns>
         private static DateTime GetPublishDate(string html)
         {
+            // 过滤html标签，防止标签对日期提取产生影响
             string text = Regex.Replace(html, "(?is)<.*?>", "");
             Match match = Regex.Match(
                 text,
-                @"((\d{4}|\d{2})(\-|\/)\d{1,2}\3\d{1,2})(\s?\d{2}:\d{2})?|(\d{4}年\d{1,2}月\d{1,2}日)(\s?\d{2}:\d{2})?", 
+                @"((\d{4}|\d{2})(\-|\/)\d{1,2}\3\d{1,2})(\s?\d{2}:\d{2})?|(\d{4}年\d{1,2}月\d{1,2}日)(\s?\d{2}:\d{2})?",
                 RegexOptions.IgnoreCase);
 
             DateTime result = new DateTime(1900, 1, 1);
@@ -226,8 +233,8 @@ namespace Html2Article
                     }
                     result = Convert.ToDateTime(dateStr);
                 }
-                catch(Exception) 
-                {}
+                catch (Exception)
+                { }
                 if (result.Year < 1900)
                 {
                     result = new DateTime(1900, 1, 1);
@@ -248,7 +255,7 @@ namespace Html2Article
             string[] lines = null;      // 保存干净的文本内容，不包含标签
 
             orgLines = bodyText.Split('\n');
-            lines = new string[orgLines.Length];                
+            lines = new string[orgLines.Length];
             // 去除每行的空白字符,剔除标签
             for (int i = 0; i < orgLines.Length; i++)
             {
@@ -275,14 +282,41 @@ namespace Html2Article
                 {
                     if (preTextLen > _limitCount && len > 0)    // 如果上次查找的文本数量超过了限定字数，且当前行数字符数不为0，则认为是开始位置
                     {
-                        startPos = i - 1;
-                        sb.Append(lines[startPos]);
-                        orgSb.Append(orgLines[startPos]);
+                        // 查找文章起始位置, 如果向上查找，发现2行连续的空行则认为是头部
+                        int emptyCount = 0;
+                        for (int j = i - 1; j > 0; j--)
+                        {
+                            if (String.IsNullOrEmpty(lines[j]))
+                            {
+                                emptyCount++;
+                            }
+                            else
+                            {
+                                emptyCount = 0;
+                            }
+                            if (emptyCount == _headEmptyLines)
+                            {
+                                startPos = j + _headEmptyLines;
+                                break;
+                            }
+                        }
+                        // 如果没有定位到文章头，则以当前查找位置作为文章头
+                        if (startPos == -1)
+                        {
+                            startPos = i;
+                        }
+                        // 填充发现的文章起始部分
+                        for (int j = startPos; j <= i; j++)
+                        {
+                            sb.Append(lines[j]);
+                            orgSb.Append(orgLines[j]);
+                        }
                     }
                 }
                 else
                 {
-                    if (len == 0 && preTextLen == 0)    // 当前长度为0，且上一个长度也为0，则认为已经结束
+                    //if (len == 0 && preTextLen == 0)    // 当前长度为0，且上一个长度也为0，则认为已经结束
+                    if (len <= _endLimitCharCount && preTextLen < _endLimitCharCount)    // 当前长度为0，且上一个长度也为0，则认为已经结束
                     {
                         if (!_appendMode)
                         {
@@ -299,6 +333,7 @@ namespace Html2Article
             string result = sb.ToString();
             // 处理回车符，更好的将文本格式化输出
             content = result.Replace("[crlf]", Environment.NewLine);
+            content = System.Web.HttpUtility.HtmlDecode(content);
             // 输出带标签文本
             contentWithTags = orgSb.ToString();
         }

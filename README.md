@@ -13,8 +13,8 @@
 
 ## 让你的项目支持Html正文提取
 
-- **将实例项目中的Html2Article.cs复制到你的项目中。**
-- **引入命名空间Html2Article。**
+- **`PM> Install-Package Html2Article`**
+- **引入命名空间`using StanSoft;`。**
 - **添加如下代码：**
 
 ```C#

@@ -8,8 +8,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using StanSoft;
 
-namespace Html2Article
+namespace Demo
 {
     public partial class FrmMain : Form
     {
@@ -59,7 +60,9 @@ namespace Html2Article
             this.publishDateTextBox.Text = article.PublishDate.ToString();
             this.titleTextBox.Text = article.Title;
             this.contentTextBox.Text = article.Content;
-            this.contentWebBrowser.DocumentText = article.ContentWithTags; 
+
+            string articleHtml = UrlUtility.FixUrl(this.urlTextBox.Text, article.ContentWithTags);
+            this.contentWebBrowser.DocumentText = articleHtml;
 
             ResetState();
         }
