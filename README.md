@@ -1,37 +1,37 @@
 # Html2Article
 
-.NET平台下，一个高效的从Html中提取正文的工具。  
-正文提取采用了基于文本密度的提取算法，支持从压缩的Html文档中提取正文，每个页面平均提取时间为30ms，正确率在95%以上。  
-![Html2Article](http://blog.zhaishidan.cn/images/project/Html2Article.png)
+.NET平台锟铰ｏ拷一锟斤拷锟斤拷效锟侥达拷Html锟斤拷锟斤拷取锟斤拷锟侥的癸拷锟竭★拷  
+锟斤拷锟斤拷锟斤拷取锟斤拷锟斤拷锟剿伙拷锟斤拷锟侥憋拷锟杰度碉拷锟斤拷取锟姐法锟斤拷支锟街达拷压锟斤拷锟斤拷Html锟侥碉拷锟斤拷锟斤拷取锟斤拷锟侥ｏ拷每锟斤拷页锟斤拷平锟斤拷锟斤拷取时锟斤拷为30ms锟斤拷锟斤拷确锟斤拷锟斤拷95%锟斤拷锟较★拷  
+![Html2Article](http://stanzhai.github.com/images/project/Html2Article.png)
 
-## Html2Article特色
+## Html2Article锟斤拷色
 
-* 标签无关，提取正文不依赖标签；
-* 支持从压缩的html文档中提取正文内容；
-* 支持带标签输出原始正文；
-* 核心算法简洁高效，平均提取时间在30ms左右。
+* 锟斤拷签锟睫关ｏ拷锟斤拷取锟斤拷锟侥诧拷锟斤拷锟斤拷锟斤拷签锟斤拷
+* 支锟街达拷压锟斤拷锟斤拷html锟侥碉拷锟斤拷锟斤拷取锟斤拷锟斤拷锟斤拷锟捷ｏ拷
+* 支锟街达拷锟斤拷签锟斤拷锟斤拷原始锟斤拷锟侥ｏ拷
+* 锟斤拷锟斤拷锟姐法锟斤拷锟斤拷锟斤拷效锟斤拷平锟斤拷锟斤拷取时锟斤拷锟斤拷30ms锟斤拷锟揭★拷
 
-## 让你的项目支持Html正文提取
+## 锟斤拷锟斤拷锟斤拷锟斤拷目支锟斤拷Html锟斤拷锟斤拷锟斤拷取
 
 - **`PM> Install-Package Html2Article`**
-- **引入命名空间`using StanSoft;`。**
-- **添加如下代码：**
+- **锟斤拷锟斤拷锟斤拷锟斤拷锟秸硷拷`using StanSoft;`锟斤拷**
+- **锟斤拷锟斤拷锟斤拷锟铰达拷锟诫：**
 
 ```C#
-// html为你要提取的html文本
+// html为锟斤拷要锟斤拷取锟斤拷html锟侥憋拷
 string html = "<html>....</html>";
-// article对象包含Title(标题)，PublishDate(发布日期)，Content(正文)和ContentWithTags(带标签正文)四个属性
+// article锟斤拷锟斤拷锟斤拷锟斤拷Title(锟斤拷锟斤拷)锟斤拷PublishDate(锟斤拷锟斤拷锟斤拷锟斤拷)锟斤拷Content(锟斤拷锟斤拷)锟斤拷ContentWithTags(锟斤拷锟斤拷签锟斤拷锟斤拷)锟侥革拷锟斤拷锟斤拷
 Article article = Html2Article.GetArticle(html);
 ```
 
-## Html2Article类
+## Html2Article锟斤拷
 
-- **Html2Article类是提取正文的核心类**
-- **Html2Article配置说明**  
-	* AppendMode：是否使用正文追加模式，默认为false，设置为true会将更多符合条件的文本添加到正文。
-	* Depth：分析的深度，默认为5，对于行空隙较大的页面可增加此值。  
-	* LimitCount：字符限定数，当分析的文本数量达到限定数则认为进入正文内容，默认为180个字符。  
-	* GetArticle(string html)：从Html文本中获取Article。
+- **Html2Article锟斤拷锟斤拷锟斤拷取锟斤拷锟侥的猴拷锟斤拷锟斤拷**
+- **Html2Article锟斤拷锟斤拷说锟斤拷**  
+	* AppendMode锟斤拷锟角凤拷使锟斤拷锟斤拷锟斤拷追锟斤拷模式锟斤拷默锟斤拷为false锟斤拷锟斤拷锟斤拷为true锟结将锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟侥憋拷锟斤拷锟接碉拷锟斤拷锟侥★拷
+	* Depth锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟饺ｏ拷默锟斤拷为5锟斤拷锟斤拷锟斤拷锟叫匡拷隙锟较达拷锟斤拷页锟斤拷锟斤拷锟斤拷锟接达拷值锟斤拷  
+	* LimitCount锟斤拷锟街凤拷锟睫讹拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟侥憋拷锟斤拷锟斤拷锟斤到锟睫讹拷锟斤拷锟斤拷锟斤拷为锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟捷ｏ拷默锟斤拷为180锟斤拷锟街凤拷锟斤拷  
+	* GetArticle(string html)锟斤拷锟斤拷Html锟侥憋拷锟叫伙拷取Article锟斤拷
 
 ## License
 
