@@ -279,15 +279,6 @@ namespace StanSoft
             StringBuilder sb = new StringBuilder();
             StringBuilder orgSb = new StringBuilder();
 
-            StringBuilder sbDebug = new StringBuilder();
-            for (int i = 0; i < lines.Length; i++)
-            {
-                sbDebug.Append(i);
-                sbDebug.Append(',');
-                sbDebug.Append(lines[i].Length);
-                sbDebug.Append("\r\n");
-            }
-
             int preTextLen = 0;         // 记录上一次统计的字符数量
             int startPos = -1;          // 记录文章正文的起始位置
             for (int i = 0; i < lines.Length - _depth; i++)
