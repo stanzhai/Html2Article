@@ -287,8 +287,6 @@ namespace StanSoft
                 sbDebug.Append(lines[i].Length);
                 sbDebug.Append("\r\n");
             }
-            File.WriteAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.txt"), lines, Encoding.Default);
-            File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "stat.csv"), sbDebug.ToString());
 
             int preTextLen = 0;         // 记录上一次统计的字符数量
             int startPos = -1;          // 记录文章正文的起始位置
