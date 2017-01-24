@@ -1,4 +1,4 @@
-﻿// Author: StanZhai 翟士丹（jasondan325@163.com）. All rights reserved. See License.md in the project root for license information.
+﻿// Author: StanZhai 翟士丹（mail@zhaishidan.cn）. All rights reserved. See License.md in the project root for license information.
 using System;
 using System.IO;
 using System.Linq;
