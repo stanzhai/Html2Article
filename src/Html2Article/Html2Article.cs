@@ -162,10 +162,10 @@ namespace StanSoft
         }
 
         /// <summary>
-        /// 获取时间
+        /// 获取文章标题
         /// </summary>
         /// <param name="html"></param>
-        /// <returns></returns>
+        /// <returns>返回文章的标题</returns>
         private static string GetTitle(string html)
         {
             string titleFilter = @"<title>[\s\S]*?</title>";
