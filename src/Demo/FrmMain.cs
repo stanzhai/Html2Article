@@ -149,6 +149,11 @@ namespace Demo
             Cef.Initialize(settings);
         }
 
+        /// <summary>
+        /// cefSharp加载网页的状态发生变化后的处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chromiumWebBrowser1_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
         {
 
@@ -165,7 +170,7 @@ namespace Demo
                     {
                         //html
                         String resultStr = t.Result;
-
+                        //对于某些特殊文章的处理，需要去掉多余的头部和尾部。
                         String sourceBegin = "<html><head></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">";
                         String sourceEnd = "</pre></body></html>";
                         if (resultStr.StartsWith(sourceBegin))
@@ -186,7 +191,11 @@ namespace Demo
                 });
             }
         }
-
+        /// <summary>
+        /// 双击url文本框选中文本框中所有的文字，方便粘贴其他的url
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void urlTextBox_DoubleClick(object sender, EventArgs e)
         {
             urlTextBox.SelectAll();
