@@ -120,7 +120,7 @@
             this.contentTextBox.Name = "contentTextBox";
             this.contentTextBox.ReadOnly = true;
             this.contentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.contentTextBox.Size = new System.Drawing.Size(845, 461);
+            this.contentTextBox.Size = new System.Drawing.Size(1679, 702);
             this.contentTextBox.TabIndex = 7;
             // 
             // titleTextBox
@@ -151,7 +151,7 @@
             this.webBrowser.MinimumSize = new System.Drawing.Size(27, 25);
             this.webBrowser.Name = "webBrowser";
             this.webBrowser.ScriptErrorsSuppressed = true;
-            this.webBrowser.Size = new System.Drawing.Size(845, 461);
+            this.webBrowser.Size = new System.Drawing.Size(1679, 702);
             this.webBrowser.TabIndex = 12;
             // 
             // tabControl1
@@ -161,11 +161,11 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(135, 138);
+            this.tabControl1.Location = new System.Drawing.Point(13, 170);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(861, 498);
+            this.tabControl1.Size = new System.Drawing.Size(1695, 739);
             this.tabControl1.TabIndex = 13;
             // 
             // tabPage1
@@ -175,7 +175,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(853, 469);
+            this.tabPage1.Size = new System.Drawing.Size(1687, 710);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "正文文本";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -187,7 +187,7 @@
             this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage3.Size = new System.Drawing.Size(853, 469);
+            this.tabPage3.Size = new System.Drawing.Size(1687, 710);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "带标签正文";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -199,7 +199,7 @@
             this.contentWebBrowser.Margin = new System.Windows.Forms.Padding(4);
             this.contentWebBrowser.MinimumSize = new System.Drawing.Size(27, 25);
             this.contentWebBrowser.Name = "contentWebBrowser";
-            this.contentWebBrowser.Size = new System.Drawing.Size(845, 461);
+            this.contentWebBrowser.Size = new System.Drawing.Size(1679, 702);
             this.contentWebBrowser.TabIndex = 0;
             // 
             // tabPage2
@@ -209,7 +209,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(853, 469);
+            this.tabPage2.Size = new System.Drawing.Size(1687, 710);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "原始网页";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -220,7 +220,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(853, 469);
+            this.tabPage4.Size = new System.Drawing.Size(1687, 710);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "cefSharp";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -231,18 +231,19 @@
             this.chromiumWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chromiumWebBrowser1.Location = new System.Drawing.Point(3, 3);
             this.chromiumWebBrowser1.Name = "chromiumWebBrowser1";
-            this.chromiumWebBrowser1.Size = new System.Drawing.Size(847, 463);
+            this.chromiumWebBrowser1.Size = new System.Drawing.Size(1681, 704);
             this.chromiumWebBrowser1.TabIndex = 0;
             this.chromiumWebBrowser1.LoadingStateChanged += new System.EventHandler<CefSharp.LoadingStateChangedEventArgs>(this.chromiumWebBrowser1_LoadingStateChanged);
             // 
             // msgLabel
             // 
             this.msgLabel.AutoSize = true;
-            this.msgLabel.Location = new System.Drawing.Point(16, 598);
+            this.msgLabel.Location = new System.Drawing.Point(1032, 78);
             this.msgLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.msgLabel.Name = "msgLabel";
-            this.msgLabel.Size = new System.Drawing.Size(0, 15);
+            this.msgLabel.Size = new System.Drawing.Size(63, 15);
             this.msgLabel.TabIndex = 15;
+            this.msgLabel.Text = "init...";
             // 
             // appendCheckBox
             // 
@@ -287,7 +288,7 @@
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1017, 650);
+            this.ClientSize = new System.Drawing.Size(1738, 922);
             this.Controls.Add(this.cbx_UseCefSharp);
             this.Controls.Add(this.msgLabel);
             this.Controls.Add(this.appendCheckBox);
@@ -305,6 +306,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.Text = "Html2Article - Author: 翟士丹 StanZhai jasondan325@163.com";
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

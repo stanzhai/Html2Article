@@ -1,5 +1,6 @@
 ﻿// Author: StanZhai 翟士丹（mail@zhaishidan.cn）. All rights reserved. See License.md in the project root for license information.
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -130,11 +131,12 @@ namespace StanSoft
             string content;
             string contentWithTags;
             GetContent(body, out content, out contentWithTags);
-
+            DateTime dtNull= new DateTime(1900, 1, 1);
+            DateTime dtTmp = GetPublishDateFromMeta(html);
             Article article = new Article
             {
                 Title = GetTitle(html),
-                PublishDate = GetPublishDate(body),
+                PublishDate = dtTmp .Equals(dtNull) ? GetPublishDate(body): dtTmp,
                 Content = content,
                 ContentWithTags = contentWithTags
             };
@@ -171,9 +173,39 @@ namespace StanSoft
             string titleFilter = @"<title>[\s\S]*?</title>";
             string h1Filter = @"<h1.*?>.*?</h1>";
             string clearFilter = @"<.*?>";
+            //在meta标签中的title
+            string titleMetaFilter =@"<meta name=""ArticleTitle"""+@"[\s\S]*?>";
+            //提取meta中的content内容
+            String contentInMeta = @"content=[""](.*?)[""]";
 
             string title = "";
-            Match match = Regex.Match(html, titleFilter, RegexOptions.IgnoreCase);
+            //如果Meta标签中有相关信息，则首先取Meta标签
+            //
+            Match match = Regex.Match(html, titleMetaFilter, RegexOptions.IgnoreCase);
+            if (match.Success)
+            {
+                // List<string> titleList = new List<string>();
+                for (int i= 0; i< match.Groups.Count; i++) {
+                    //提取内容content="
+
+                    // String tmp = Regex.Replace(match.Groups[0].Value, clearFilter, "");
+                    String tmp = "";
+                     Regex r = new Regex(contentInMeta);
+                    var ms = r.Matches(match.Groups[0].Value);
+                    Match m = ms[0];
+                    tmp = m.Groups[1].Value;
+                    //循环取最长的结果作为最终的Title
+                    if (tmp.Length > title.Length) {
+                        title = tmp;
+                    }
+                }
+                //如果已经从meta中识别到了title，则直接返回
+                if (!String.IsNullOrEmpty(title)) {
+                    return title;
+                }
+            }
+
+            match = Regex.Match(html, titleFilter, RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 title = Regex.Replace(match.Groups[0].Value, clearFilter, "");
@@ -193,12 +225,81 @@ namespace StanSoft
         }
 
         /// <summary>
-        /// 获取文章发布日期
+        /// 从Meta信息中获取文章发布日期
         /// </summary>
-        /// <param name="html"></param>
-        /// <returns></returns>
+        /// <param name="html">完整的HTML代码</param>
+        /// <returns>解析日期</returns>
+        private static DateTime GetPublishDateFromMeta(string html)
+        {
+            DateTime result = new DateTime(1900, 1, 1);
+            String dateStr = "";
+            //尝试从Meta中获取文章发布时间
+            //在meta标签中的title(政府网站有格式要求，参考：http://www.gov.cn/zhengce/content/2017-06/08/content_5200760.htm)
+            string pubDateMetaFilter = @"<meta name=""PubDate""" + @"[\s\S]*?>";
+            //提取meta中的content内容
+            String contentInMeta = @"content=[""](.*?)[""]";
+            Match match = Regex.Match(html, pubDateMetaFilter, RegexOptions.IgnoreCase);
+            if (!match.Success)
+            {
+                
+                pubDateMetaFilter = @"<meta property=""article:published_time""" + @"[\s\S]*?>";
+                match = Regex.Match(html, pubDateMetaFilter, RegexOptions.IgnoreCase);
+
+                if (!match.Success)
+                {
+                    //网易 ，测试 https://www.163.com/dy/article/H6U0JSOJ051497H3.html?clickfrom=w_yw
+                    pubDateMetaFilter = @"<meta name=""apub:time""" + @"[\s\S]*?>";
+                    match = Regex.Match(html, pubDateMetaFilter, RegexOptions.IgnoreCase);
+                    if (!match.Success)
+                    {
+                        //、新浪 测试 https://news.sina.com.cn/s/2022-05-09/doc-imcwiwst6388469.shtml
+                        pubDateMetaFilter = @"<meta name=""article:published_time""" + @"[\s\S]*?>";
+                        match = Regex.Match(html, pubDateMetaFilter, RegexOptions.IgnoreCase);
+                        if (!match.Success)
+                        {
+                            //腾讯 测试 https://new.qq.com/omn/20220509/20220509A0412D00.html
+                            pubDateMetaFilter = @"<meta name=""apub:time""" + @"[\s\S]*?>";
+                            match = Regex.Match(html, pubDateMetaFilter, RegexOptions.IgnoreCase);
+                        }
+                    }
+                }
+              
+            }
+            if (match.Success)
+            {
+                for (int i = 0; i < match.Groups.Count; i++)
+                {
+                    //提取内容content="
+                    String tmp = "";
+                    Regex r = new Regex(contentInMeta);
+                    var ms = r.Matches(match.Groups[0].Value);
+                    Match m = ms[0];
+                    tmp = m.Groups[1].Value;
+                    //循环取最长的结果作为最终的结果
+                    if (tmp.Length > dateStr.Length)
+                    {
+                        dateStr = tmp;
+                    }
+                }
+                //如果已经从meta中识别到了，则直接返回
+                if (!String.IsNullOrEmpty(dateStr))
+                {
+                    result = Convert.ToDateTime(dateStr);
+                    return result;
+                }
+            }
+            return result;
+        }
+        
+        /// <summary>
+         /// 获取文章发布日期
+         /// </summary>
+         /// <param name="html"></param>
+         /// <returns></returns>
         private static DateTime GetPublishDate(string html)
         {
+            DateTime result = new DateTime(1900, 1, 1);
+           
             // 过滤html标签，防止标签对日期提取产生影响
             string text = Regex.Replace(html, "(?is)<.*?>", "");
             Match match = Regex.Match(
@@ -206,12 +307,12 @@ namespace StanSoft
                 @"((\d{4}|\d{2})(\-|\/)\d{1,2}\3\d{1,2})(\s?\d{2}:\d{2})?|(\d{4}年\d{1,2}月\d{1,2}日)(\s?\d{2}:\d{2})?",
                 RegexOptions.IgnoreCase);
 
-            DateTime result = new DateTime(1900, 1, 1);
+          
             if (match.Success)
             {
                 try
                 {
-                    string dateStr = "";
+                    String dateStr = "";
                     for (int i = 0; i < match.Groups.Count; i++)
                     {
                         dateStr = match.Groups[i].Value;

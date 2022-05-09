@@ -20,6 +20,7 @@ namespace Demo
         {
             InitializeComponent();
             InitCefSharp();
+            
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -37,7 +38,9 @@ namespace Demo
                 this.webBrowser.DocumentCompleted += webBrowser_DocumentCompleted;
             }
             else {
-                //试用cefSharp
+                //使用cefSharp
+                tabControl1.SelectedTab = tabPage4;
+                //tabPage4.Show();
                 LoadUrlUsingCefSharp(this.urlTextBox.Text.Trim());
             }
             SetDownloadState();
@@ -199,6 +202,15 @@ namespace Demo
         private void urlTextBox_DoubleClick(object sender, EventArgs e)
         {
             urlTextBox.SelectAll();
+        }
+
+        private void FrmMain_Load(object sender, EventArgs e)
+        {
+           // tabPage4.AutoScroll = true;
+            tabPage4.HorizontalScroll.Enabled = true;
+           // chromiumWebBrowser1.Dock = DockStyle.None;
+            chromiumWebBrowser1.Width = 1024 ;
+            chromiumWebBrowser1.Height = 768;
         }
     }
 }
