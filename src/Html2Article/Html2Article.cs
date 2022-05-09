@@ -166,7 +166,7 @@ namespace StanSoft
         /// <summary>
         /// 获取文章标题
         /// </summary>
-        /// <param name="html"></param>
+        /// <param name="html">完整的页面HTML</param>
         /// <returns>返回文章的标题</returns>
         private static string GetTitle(string html)
         {
@@ -177,6 +177,19 @@ namespace StanSoft
             string titleMetaFilter =@"<meta name=""ArticleTitle"""+@"[\s\S]*?>";
             //提取meta中的content内容
             String contentInMeta = @"content=[""](.*?)[""]";
+            //符合《政府网站发展指引》http://www.gov.cn/zhengce/content/2017-06/08/content_5200760.htm 
+            //中规定的，直接取出title即可
+            String titleInMeta = @"<meta\s+name\s*=\s*""ArticleTitle""\s+content\s*=\s*""([\s\S]*?)(?<!\\)""\s*>";
+
+            Regex regex = new Regex(titleInMeta);
+            var matches = regex.Matches(html);
+            if (matches.Count > 0) { 
+                Match matchTmp = matches[0];
+                if ((matchTmp.Success)&&(matchTmp.Groups.Count>1)) {
+                    return matchTmp.Groups[1].Value;
+                }
+            }
+
 
             string title = "";
             //如果Meta标签中有相关信息，则首先取Meta标签
