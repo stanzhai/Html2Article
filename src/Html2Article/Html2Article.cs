@@ -185,7 +185,7 @@ namespace StanSoft
             var matches = regex.Matches(html);
             if (matches.Count > 0) { 
                 Match matchTmp = matches[0];
-                if ((matchTmp.Success)&&(matchTmp.Groups.Count>1)) {
+                if ((matchTmp.Success)&&(matchTmp.Groups.Count>1)&& (matchTmp.Groups[1].Value.Length>0)) {
                     return matchTmp.Groups[1].Value;
                 }
             }
